@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rate Your Experience</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+        
+        body {
+            background: #121212;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 420px;
+        }
+        
+        .card {
+            background: #1e1e1e;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+        
+        h1 {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+        
+        .subtitle {
+            font-size: 14px;
+            color: #aaa;
+            margin-bottom: 20px;
+        }
+        
+        .steps {
+            font-size: 13px;
+            color: #bbb;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        label {
+            font-size: 13px;
+            margin-bottom: 6px;
+            display: block;
+            color: #bbb;
+        }
+        
+        select,
+        textarea {
+            width: 100%;
+            background: #2a2a2a;
+            border: none;
+            border-radius: 10px;
+            padding: 12px;
+            color: #fff;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        
+        textarea {
+            min-height: 120px;
+            resize: none;
+        }
+        
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 500;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+        
+        .copy-btn {
+            background: #03dac6;
+            color: #000;
+        }
+        
+        .copy-btn:active {
+            transform: scale(0.98);
+        }
+        
+        .continue-btn {
+            background: #bb86fc;
+            color: #000;
+        }
+        
+        .continue-btn:active {
+            transform: scale(0.98);
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #888;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="card">
+            <h1>⭐ Rate Your Experience</h1>
+            <div class="subtitle">Takes less than 30 seconds</div>
+
+            <div class="steps">
+                1. Select staff (optional)<br> 2. Edit review<br> 3. Copy & Continue
+            </div>
+
+            <label>Select Staff</label>
+            <select id="staff">
+            <option value="">-- Optional --</option>
+            <option>Kamna</option>
+            <option>Sana</option>
+            <option>Rahul</option>
+            <option>Nikhil</option>
+            <option>Yaseen</option>
+            <option>Vaibhav</option>
+            <option>Amandeep</option>
+            <option>Arun</option>
+            <option>Swapnil</option>
+        </select>
+
+            <label>Edit Your Review</label>
+            <textarea id="review"></textarea>
+
+            <button class="copy-btn" onclick="copyReview()">Copy Review</button>
+            <button class="continue-btn" onclick="goToGoogle()">Continue to Google Review</button>
+        </div>
+
+        <div class="footer">Thank you ❤️</div>
+    </div>
+
+    <script>
+        const templates = [
+            "Amazing food and great ambiance. {name} provided excellent service. Highly recommended!",
+            "Loved the pizza and overall experience. {name} was very attentive and friendly. Will visit again!",
+            "Fantastic taste and quick service. {name} made our visit even better!",
+            "Great place for dining. {name} was polite and ensured everything was perfect.",
+            "Delicious food and nice atmosphere. Special thanks to {name} for the wonderful service!"
+        ];
+
+        const defaultTemplates = [
+            "Amazing food and great ambiance. Highly recommended!",
+            "Loved the pizza and overall experience. Will visit again!",
+            "Fantastic taste and quick service. Great place!",
+            "Nice atmosphere and delicious food. Really enjoyed it!",
+            "Great dining experience. Food and service were both excellent!"
+        ];
+
+        const staffSelect = document.getElementById("staff");
+        const reviewBox = document.getElementById("review");
+
+        // Set initial default review
+        setRandomDefault();
+
+        staffSelect.addEventListener("change", () => {
+            const name = staffSelect.value;
+
+            if (name) {
+                const random = templates[Math.floor(Math.random() * templates.length)];
+                reviewBox.value = random.replace("{name}", name);
+            } else {
+                setRandomDefault();
+            }
+        });
+
+        function setRandomDefault() {
+            const random = defaultTemplates[Math.floor(Math.random() * defaultTemplates.length)];
+            reviewBox.value = random;
+        }
+
+        function copyReview() {
+            reviewBox.select();
+            document.execCommand("copy");
+            alert("Review copied!");
+        }
+
+        function goToGoogle() {
+            window.open("https://search.google.com/local/writereview?placeid=ChIJ-QAAQObH5zsRrDxQZOGu0ds", "_blank");
+        }
+    </script>
+
+</body>
+
+</html>
